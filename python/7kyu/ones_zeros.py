@@ -1,23 +1,12 @@
-def reduce(txt, kind):
-    count = 0
-    for item in txt:
-        if kind != item:
-            return count
-        count += 1
-    return count
-        
+from itertools import groupby 
+
 def same_length(txt):
-    if len(txt) == 0:
-        return True
     if txt[0] == '0':
-        return False 
-    ones = reduce(txt, '1')
-    print(ones)
-    txt = txt[ones:]
-    zeros = reduce(txt, '0')
-    print(zeros)
-    if ones == zeros:
-        return same_length(txt[zeros:])
-    else:
         return False
-    
+    groups = [len(list(g)) for _, g in groupby(txt)]
+    if len(groups)%2 != 0:
+        return False
+    for i in range(0, len(groups) - 1, 2):
+        if groups[i] != groups[i+1]:
+            return False 
+    return True
